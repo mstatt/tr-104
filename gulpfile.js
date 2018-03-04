@@ -1,6 +1,7 @@
 //Plugins and requires
 var gulp = require('gulp');
 var bump = require('gulp-bump');
+var uncss = require('gulp-uncss');
 var clean = require('gulp-clean');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
@@ -66,7 +67,7 @@ gulp.task('scriptswork',function (){
 });
 
 
-//Auto prefix, concat and minify custom css files in the project
+//Auto clean unused css, prefix, concat and minify custom css files in the project
 gulp.task('styles',function (){
   console.log('Starting styles task');
   return gulp.src([DEV_PATH + 'css/reset.css',DEV_PATH + 'css/main.css'])
@@ -78,6 +79,14 @@ gulp.task('styles',function (){
   .pipe(minifycss())
   .pipe(gulp.dest(DEV_PATH + '/css'))
   .pipe(livereload());
+});
+
+
+//Clean up all unused css across specified .css and .html files
+gulp.task('cleancss', function() {
+  return gulp.src([DEV_PATH + 'css/reset.css',DEV_PATH + 'css/main.css'])
+    .pipe(uncss({html: [DEV_PATH + 'index.html']}))
+    .pipe(gulp.dest(DEV_PATH + '/css'));
 });
 
 

@@ -44,11 +44,13 @@ http://nodejs.org
 
 --NPM and gulp should already be installed from the previous session but if you started a new project do not worry. The commands with install and load all you need.
 
---We are adding (2) new plug-ins for this one.
+--We are adding (3) new plug-ins for this one.
 
 --The gulp-minify-css is the plugin to clean up and minimize css files.
 
 --The gulp-autoprefixer is the "postprocessor" for handling vendor prefixes in CSS.
+
+--The gulp-uncss to clean up unused css across .css and html files.
 
 # Install
 Here are all of the commands to run(once Node is installed):
@@ -59,13 +61,28 @@ Here are all of the commands to run(once Node is installed):
 >>npm install
 
 ********************** Single line command to install all plugins ***************
->>npm install gulp gulp-htmlclean gulp-clean-css gulp-concat gulp-uglify run-sequence gulp-bump del gulp-remove-empty-lines gulp-clean gulp-js-obfuscator gulp-livereload gulp-strip-code static-server gulp-minify-css gulp-autoprefixer --save-dev
+>>npm install gulp gulp-htmlclean gulp-clean-css gulp-concat gulp-uglify run-sequence gulp-bump del gulp-remove-empty-lines gulp-clean gulp-js-obfuscator gulp-livereload gulp-strip-code static-server gulp-minify-css gulp-autoprefixer gulp-uncss --save-dev
 
 
 # Run
-**********************Run the following command in the terminal***************
->>gulp watch
 
+--Open th dev/css/main.css file in an editor.
+
+--Add a style to a element that does not exist in index.html ex: #divname {text-align : center;}
+
+--Save the file.
+
+**********************Run the following command in the terminal***************
+>>gulp cleancss
+
+--Open th dev/css/main.css file in an editor.
+
+--Notice all styles are gone that have no referrence in index.html.
+
+
+**********************Run the following command in the terminal***************
+
+>>gulp watch
 
 --Launch index.html in a browser
 
@@ -79,6 +96,8 @@ Here are all of the commands to run(once Node is installed):
 >>ctrl + c   
 
 & y for yes to stop livereload server and run any other gulp command. (gulp stagetest or gulp stageprod)
+
+**********************Run the following command in the terminal***************
 
 >> gulp stagetest
 

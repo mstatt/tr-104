@@ -70,7 +70,9 @@ Here are all of the commands to run(once Node is installed):
 
 --Launch index.html in a browser
 
--- Open a file from the dev, dev/css/main.css in an editor make a change and save it, the browser will reflect and render changes.
+-- Open a file from the dev/css/main.css in an editor make a change and save it, the browser will reflect and render changes.
+
+-- Open the dev/css/main.css to verify that it has been auto-prefixed and minified.
 
 -- **DO NOT edit styles.css or the changes will be overwritten, main.css and any others you want to add are for editing/development those will get output to styles.css. **
 
@@ -85,7 +87,7 @@ Here are all of the commands to run(once Node is installed):
 
 -- Open the test/js/main.js in an editor to verify that the contents are obfuscated.
 
--- Open the test/css/main.css to verify that is is the only css fle and that it has been auto-prefixed and minified.
+-- Open the test/css/main.css to verify that it is the only css file and that it has been auto-prefixed and minified.
 
 **********************Run the following command in the terminal***************
 >>gulp stageprod

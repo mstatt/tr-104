@@ -18,6 +18,8 @@ var DEV_PATH = 'dev/';
 var TEST_PATH = 'test/';
 var PROD_PATH = 'prod/';
 
+
+//-----------------------------------Watch and Server reload tasks-------------------------------------//
 //Watch certain directories for changes
 gulp.task('watch',function (){
   console.log('Starting watch task');
@@ -36,26 +38,27 @@ gulp.task('b-reload',function (){
   .pipe(livereload());
 });
 
-//Clean Test Directories
-gulp.task('cleantest', function () {
-  console.log('Cleaning Up files and directories');
-    return gulp.src(TEST_PATH, {read: false})
-        .pipe(clean());
-});
+//-----------------------------------Watch and Server reload tasks-------------------------------------//
 
-//Clean Prod Directories
-gulp.task('cleanprod', function () {
-  console.log('Cleaning Up files and directories');
-    return gulp.src(PROD_PATH, {read: false})
-        .pipe(clean());
-});
+//-----------------------------------HTML manipulation tasks-------------------------------------//
 
-//Build the test directory structure and files
-gulp.task('buildtest', function() {
-  console.log('Building test directory');
-  return gulp.src(DEV_PATH + '**/*')
-    .pipe( gulp.dest(TEST_PATH))
+//Clean up Html
+gulp.task('indexcleanup', function () {
+  console.log('Cleaning up index.html.');
+  gulp.src(TEST_PATH + 'index.html')
+  //Removes comment block for live server upon staging.
+  .pipe(stripCode({
+      start_comment: "start-test-block",
+      end_comment: "end-test-block"
+    }))
+  .pipe(clearlines({
+    removeComments: true
+  }))
+  .pipe(gulp.dest(TEST_PATH));
 });
+//-----------------------------------HTML manipulation tasks-------------------------------------//
+
+//-----------------------------------JavaScript manipulation tasks-------------------------------------//
 
 //Uglify and combine all specified js files into one
 gulp.task('scriptswork',function (){
@@ -66,6 +69,41 @@ gulp.task('scriptswork',function (){
          .pipe(gulp.dest(DEV_PATH + '/js/obf'));
 });
 
+
+//Pre-obfuscation remove current js file to avoid conflict
+gulp.task('pre-obfuscation', function () {
+    return gulp.src([TEST_PATH + '/js/main.js',TEST_PATH + '/js/obf',TEST_PATH + 'css/reset.css',TEST_PATH + 'css/main.css'], {read: false})
+        .pipe(clean());
+});
+
+
+//Javascript Obfuscator
+gulp.task('obfuscate',function (){
+  console.log('Obfuscating js file.');
+  var path = {
+    build: {
+      js: TEST_PATH + '/js',
+    },
+    src: {
+      js: DEV_PATH + '/js/obf/main.js',
+    }
+};
+  return gulp.src(path.src.js)
+      .pipe(js_obfuscator({}, ["**/jquery-*.js"]))
+      .pipe(gulp.dest(path.build.js));
+});
+
+
+//Post-obfuscation remove current js file to avoid conflict
+gulp.task('postflight', function () {
+    return gulp.src([TEST_PATH,DEV_PATH + '/js/obf'], {read: false})
+        .pipe(clean());
+});
+
+//-----------------------------------JavaScript manipulation tasks-------------------------------------//
+
+
+//-----------------------------------CSS manipulation tasks-------------------------------------//
 
 //Auto clean unused css, prefix, concat and minify custom css files in the project
 gulp.task('styles',function (){
@@ -88,30 +126,30 @@ gulp.task('cleancss', function() {
     .pipe(uncss({html: [DEV_PATH + 'index.html']}))
     .pipe(gulp.dest(DEV_PATH + '/css'));
 });
+//-----------------------------------CSS manipulation tasks-------------------------------------//
 
 
-//Pre-obfuscation remove current js file to avoid conflict
-gulp.task('pre-obfuscation', function () {
-    return gulp.src([TEST_PATH + '/js/main.js',TEST_PATH + '/js/obf',TEST_PATH + 'css/reset.css',TEST_PATH + 'css/main.css'], {read: false})
+//-----------------------------------Directory building and manipulation tasks-------------------------------------//
+//Clean Test Directories
+gulp.task('cleantest', function () {
+  console.log('Cleaning Up files and directories');
+    return gulp.src(TEST_PATH, {read: false})
         .pipe(clean());
 });
 
-//Javascript Obfuscator
-gulp.task('obfuscate',function (){
-  console.log('Obfuscating js file.');
-  var path = {
-    build: {
-      js: TEST_PATH + '/js',
-    },
-    src: {
-      js: DEV_PATH + '/js/obf/main.js',
-    }
-};
-  return gulp.src(path.src.js)
-      .pipe(js_obfuscator({}, ["**/jquery-*.js"]))
-      .pipe(gulp.dest(path.build.js));
+//Clean Prod Directories
+gulp.task('cleanprod', function () {
+  console.log('Cleaning Up files and directories');
+    return gulp.src(PROD_PATH, {read: false})
+        .pipe(clean());
 });
 
+//Build the test directory structure and files
+gulp.task('buildtest', function() {
+  console.log('Building test directory');
+  return gulp.src(DEV_PATH + '**/*')
+    .pipe( gulp.dest(TEST_PATH))
+});
 
 ////Build the prod directory structure and files from test
 gulp.task('buildprod', function() {
@@ -119,22 +157,10 @@ gulp.task('buildprod', function() {
   return gulp.src(TEST_PATH + '**/*')
     .pipe( gulp.dest(PROD_PATH))
 });
+//-----------------------------------Directory building and manipulation tasks-------------------------------------//
 
-//Clean up Html
-gulp.task('indexcleanup', function () {
-  console.log('Cleaning up index.html.');
-  gulp.src(TEST_PATH + 'index.html')
-  //Removes comment block for live server upon staging.
-  .pipe(stripCode({
-      start_comment: "start-test-block",
-      end_comment: "end-test-block"
-    }))
-  .pipe(clearlines({
-    removeComments: true
-  }))
-  .pipe(gulp.dest(TEST_PATH));
-});
 
+//-----------------------------------Utility tasks-------------------------------------//
 
 //Update the version in package.json
 gulp.task("bump", function () {
@@ -144,12 +170,6 @@ gulp.task("bump", function () {
         .pipe(gulp.dest("./"));
 });
 
-
-//Pre-obfuscation remove current js file to avoid conflict
-gulp.task('postflight', function () {
-    return gulp.src([TEST_PATH,DEV_PATH + '/js/obf'], {read: false})
-        .pipe(clean());
-});
 
 //In sequence build the test directory, clean up index.html and update version # in the package.json and stage all of the files
 //publishtest
@@ -165,3 +185,5 @@ console.log('Starting to Publish production files..............');
 runSequence('cleanprod','buildprod','postflight');
 console.log('Completed publishing production files..............');
 });
+
+//-----------------------------------Utility tasks-------------------------------------//

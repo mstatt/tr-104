@@ -2,7 +2,7 @@
 
 As a continuation from the 4th task runner tutorial, in this session we are going to be using plugins to manage the style sheets for the project.
 
-# TR-104 dev directory structure as follows:
+# TR-104 directory structure as follows:
 Project Folder(TR-104)
 tr-104/
 |- dev/

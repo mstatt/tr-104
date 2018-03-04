@@ -105,7 +105,9 @@ Here are all of the commands to run(once Node is installed):
 
 -- Open the test/js/main.js in an editor to verify that the contents are obfuscated.
 
--- Open the test/css/main.css to verify that it is the only css file and that it has been auto-prefixed and minified.
+-- Verify that test/css/styles.css is the only css file in that directory.
+
+-- Open the test/css/styles.css to verify that it has been auto-prefixed and minified.
 
 **********************Run the following command in the terminal***************
 >>gulp stageprod

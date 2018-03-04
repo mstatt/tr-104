@@ -66,7 +66,7 @@ Here are all of the commands to run(once Node is installed):
 
 # Run
 
---Open th dev/css/main.css file in an editor.
+--Open the dev/css/main.css file in an editor.
 
 --Add a style to a element that does not exist in index.html ex: #divname {text-align : center;}
 

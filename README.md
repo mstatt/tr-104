@@ -6,10 +6,15 @@ As a continuation from the 4th task runner tutorial, in this session we are goin
 Project Folder(TR-104)
 tr-104/
 |- dev/
+
   |- index.html
+  
   |- js/
+  
     |- main.js
+    
     |- jquery-3.3.1.min.js
+    
   |- css/
 
       |- main.css

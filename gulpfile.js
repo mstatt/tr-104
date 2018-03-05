@@ -5,6 +5,7 @@ var uncss = require('gulp-uncss');
 var clean = require('gulp-clean');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
+var htmlmin = require('gulp-htmlmin');
 var runSequence = require('run-sequence');
 var minifycss = require('gulp-minify-css');
 var livereload = require('gulp-livereload');
@@ -54,6 +55,7 @@ gulp.task('indexcleanup', function () {
   .pipe(clearlines({
     removeComments: true
   }))
+  .pipe(htmlmin({collapseWhitespace: true}))
   .pipe(gulp.dest(TEST_PATH));
 });
 //-----------------------------------HTML manipulation tasks-------------------------------------//

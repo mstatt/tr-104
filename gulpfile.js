@@ -173,7 +173,7 @@ gulp.task("bump", function () {
 });
 
 
-//In sequence build the test directory, clean up index.html and update version # in the package.json and stage all of the files
+//In sequence build the test directory, clean up index.html, obfuscate the javascript, remove "live reload" script from test/index.html, clean/auto-prefix/minify css files and update version # in the package.json and stage all of the files
 //publishtest
 gulp.task('stagetest',function (){
 console.log('Starting to Publish test files..............');

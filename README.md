@@ -1,6 +1,6 @@
 # Task Runners 104:
 
-As a continuation from the 4th task runner tutorial, in this session we are going to be using plugins to manage the style sheets for the project.
+As a continuation from the 3rd task runner tutorial, in this session we are going to be using plugins to manage the style sheets for the project.
 
 # TR-104 directory structure as follows:
 Project Folder(TR-104)

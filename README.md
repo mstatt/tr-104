@@ -137,7 +137,6 @@ Part V: (Image Compression)
 
 https://github.com/mstatt/tr-105
 
-
 ************************************************
 Helpful Link:
 https://gist.github.com/renarsvilnis/ab8581049a3efe4d03d8

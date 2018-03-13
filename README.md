@@ -133,6 +133,10 @@ Part III: (Live reload)
 
 https://github.com/mstatt/tr-103
 
+Part V: (Image Compression)
+
+https://github.com/mstatt/tr-105
+
 
 ************************************************
 Helpful Link:
